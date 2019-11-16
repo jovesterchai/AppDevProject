@@ -14,9 +14,9 @@ def feedback():
     return render_template('feedback.html')
 
 
-@app.route('/shoppingcart')
-def shoppingcart():
-    return render_template('shoppingcart.html')
+@app.route('/transaction')
+def transaction():
+    return render_template('transaction.html')
 
 
 @app.route('/shop')
@@ -25,7 +25,7 @@ def shop():
 
 
 @app.route('/login')
-def shop():
+def login():
     return render_template('login.html')
 
 
