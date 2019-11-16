@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
-from Forms import CreateUserFeedback #input the objects from Forms.py
+from Forms import CreateUserFeedback   # Input the objects from Forms.py
 import shelve, User
 
 
 app = Flask(__name__)
 
-# '/<accName>' is used when the directory has a name
+
 # '/' indicates the root directory of the website
 @app.route('/')
 def home():
