@@ -32,6 +32,11 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/clothesInfo')
+def clothesInfo():
+    return render_template('clothesInfo.html')
+
+
 # Means only if you run Main.py then the page will run (app.run())
 if __name__ == '__main__':
     app.run()
