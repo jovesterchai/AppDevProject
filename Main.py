@@ -7,7 +7,12 @@ app = Flask(__name__)
 
 
 # '/' indicates the root directory of the website
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+def clothesInfo():
+    return render_template('clothesInfo.html', discount = False)
+
+
+@app.route('/clothesInfo')
 def home():
     return render_template('home.html')
 
@@ -30,11 +35,6 @@ def shop():
 @app.route('/login')
 def login():
     return render_template('login.html')
-
-
-@app.route('/clothesInfo')
-def clothesInfo():
-    return render_template('clothesInfo.html')
 
 
 # Means only if you run Main.py then the page will run (app.run())

@@ -1,31 +1,42 @@
 {% extends "base.html" %}
 {% block title %}Our Website - Clothes Information{% endblock %}
 {% block content %}
-<div style='margin: 10px'>
+<div style='margin: 8px'>
     <div style='float: left'>
-        <a style="margin-right: 10px" href="/">Home</a>
-        <a style="margin-right: 10px">></a>
-        <a style="margin-right: 10px" href="#">Clothes</a>
-        <a style="margin-right: 10px">></a>
-        <a style="margin-right: 10px" href="#">Top</a>
-        <a style="margin-right: 10px">></a>
-        <a style="margin-right: 10px" href="#">Women's</a>
-        <a style="margin-right: 10px">></a>
-        <a style="margin-right: 10px">Drop Shoulder V Neck Oversized Sweater - Red Wine S</a>
+        <a style="margin-right: 8px" href="/">Home</a>
+        <a style="margin-right: 6px; font-size: 15px">></a>
+        <a style="margin-right: 8px" href="#">Clothes</a>
+        <a style="margin-right: 6px; font-size: 15px">></a>
+        <a style="margin-right: 8px" href="#">Top</a>
+        <a style="margin-right: 6px; font-size: 15px">></a>
+        <a style="margin-right: 8px" href="#">Women's</a>
+        <a style="margin-right: 6px; font-size: 15px">></a>
+        <a style="margin-right: 8px">Drop Shoulder V Neck Oversized Sweater - Red Wine S</a>
     </div>
     <br>
-    <div style='margin: 50px; margin-top: 40px'>
-        <p>Product Details</p>
-        <hr>
-        <div style='float: left'>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYl8_jgPw2uILCw7Q1NsLVAosQGN10WnA_8JX-Jg0xWW3-5GKg&s" style="width : 600px; float: right; margin-left: 30px">
-            <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284111313370.jpg"  style="width: 135px; margin-bottom: 10px">
-            <br>
-            <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284952351161.jpg"  style="width: 135px; margin-bottom: 10px">
-            <br>
-            <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284261580453.jpg" style="width: 135px; margin-bottom: 10px">
-            <br>
-            <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284460178514.jpg" style="width: 135px; margin-bottom: 10px">
+    <div>
+        <div style='margin: 50px; margin-top: 40px'>
+            <p>Product Details</p>
+            <hr>
+            <div style='float: left; margin-bottom: 40px'>
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284111313370.jpg" style="width : 80%; float: right; margin-top: 7px; border-style: solid; border-width: 15px; border-color: white">
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284111313370.jpg"  style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                <br>
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284952351161.jpg"  style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                <br>
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284261580453.jpg" style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                <br>
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284460178514.jpg" style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+            </div>
+        </div>
+        <div style="float: left; margin-top: -35px; margin-left: 50px; padding: 10px; background-color: rgb(242, 242, 242); border-style: solid; border-width: thin">
+            <h3>Drop Shoulder V Neck Oversized Sweater - Red Wine S</h3>
+            <hr>
+            {% if discount %}
+            <h1 style="font-weight: bold; font-color: rgb(204, 15, 95)">$32.20</h1>
+            {% else %}
+            <h1 style="font-weight: bold; font-color: rgb(204, 15, 95)">$22.60</h1>
+            {% endif %}
         </div>
     </div>
 </div>
