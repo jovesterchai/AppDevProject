@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Our Website - Clothes Information{% endblock %}
 {% block content %}
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
 <div style='margin: 8px'>
     <div style='float: left'>
         <a style="margin-right: 8px" href="/">Home</a>
@@ -30,14 +31,54 @@
             </div>
         </div>
         <div style="float: left; margin-top: -35px; margin-left: 50px; padding: 10px; background-color: rgb(242, 242, 242); border-style: solid; border-width: thin">
-            <h3>Drop Shoulder V Neck Oversized Sweater - Red Wine S</h3>
-            <hr>
+            <h4>Drop Shoulder V Neck Oversized Sweater - Red Wine S</h4>
             {% if discount %}
-            <h1 style="font-weight: bold; font-color: rgb(204, 15, 95)">$32.20</h1>
+            <h1 style="font-size: 60px; font-weight: bold; font-color: rgb(204, 15, 95)">$32.20</h1>
             {% else %}
-            <h1 style="font-weight: bold; font-color: rgb(204, 15, 95)">$22.60</h1>
+            <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$22.60<span style="color: black; margin-left: 5px; opacity: 0.5; font-size: 15px">Original Price: $32.20</span></h1>
             {% endif %}
+            <hr>
+            <h6 style="margin-left: 11px; opacity: 0.8">COLOR :
+                <span style="margin-left: 37px; opacity: 1">
+                    <div class="custom-select" style="width: 170px;">
+                        <select>
+                            <option value="0">Red Wine</option>
+                            <option value="1">Black</option>
+                            <option value="2">Blue</option>
+                            <option value="3">Firebrick</option>
+                            <option value="4">Green</option>
+                            <option value="5">Light Blue</option>
+                            <option value="6">Mint Green</option>
+                            <option value="7">Orange Gold</option>
+                            <option value="8">Pink</option>
+                            <option value="9">Warm White</option>
+                        </select>
+                    </div>
+                </span>
+            </h6>
+            <h6 style="margin-left: 34px; opacity: 0.8">SIZE :
+                <span style="margin-left: 37px; opacity: 1">
+                    <div class="custom-select" style="width: 85px;">
+                        <select>
+                            <option value="0">S</option>
+                            <option value="1">M</option>
+                            <option value="2">L</option>
+                        </select>
+                    </div>
+                </span>
+            </h6>
+            <h6 style="margin-left: 37px; opacity: 0.8">QTY :
+                <span style="margin-left: 37px; opacity: 1">
+                    <input name="quantity" type="number" style="padding-left: 9px">
+
+                </span>
+            </h6>
         </div>
     </div>
 </div>
+<style>
+    * {
+    font-family: 'Montserrat', sans-serif;
+    }
+</style>
 {% endblock %}
