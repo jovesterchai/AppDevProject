@@ -1,1 +1,84 @@
 <h1>Welcome to the shopping cart!</h1>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<style>
+* {
+font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 60%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+.column1 {
+  float: left;
+  width: 40%;
+  padding: 10px;
+  height: 1270px; /* Should be removed. Only for demonstration */
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.column img{
+    width:80%;
+    margin-top:100px;
+    margin-left:40px;
+    float:left;
+}
+.column h1{
+font-size:27px;
+margin-right:10px;
+}
+.column1 h1{
+font-size:40px;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: black;
+  padding: 50px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 8px;
+  cursor: pointer;
+  border-radius: 12px;
+  margin-top:30px;
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="row">
+  <div class="column" style="background-color:#ffffff;">
+    <h1 align="center">100 Thieves 2019</h1>
+      <h1 align="center">Hoodie Cream</h1>
+      <p align="center">Highest Bid: <b>$55</b> | Lowest Ask: <b>$90</b></p>
+      <p align="center">U.S. Men's Size S</p>
+      <img src="https://stockx.imgix.net/products/streetwear/100-Thieves-2019-Hoodie-Cream.jpg?fit=fill&bg=FFFFFF&w=700&h=500&auto=format,compress&q=90&dpr=2&trim=color&updated_at=1574542198">
+  </div>
+  <div class="column1" style="background-color:#f2f2f2;">
+    <h1 align="center">Billing/Shipping</h1>
+      <p align="center">Please choose your billing and shipping method</p>
+      <button class="button"><b>PayPal/Stripe</b></button>
+    <button class="button"><b>Credit/Debit Card</b></button>
+      <button class="button"><b>Alipay</b></button>
+  </div>
+</div>
+
+</body>
+</html>
