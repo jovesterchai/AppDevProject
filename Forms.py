@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, RadioField, SelectField, TextAreaField, validators
+from wtforms import Form, StringField, RadioField, SelectField, TextAreaField, validators, SelectMultipleField, DecimalField, IntegerField
 
 class CreateUserFeedback(Form):
     firstName = StringField('First Name', [validators.Length(min=1, max=150), validators.DataRequired()])
