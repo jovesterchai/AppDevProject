@@ -1,45 +1,133 @@
 from flask import *
-from Forms import CreateUserFeedback   # Input the objects from Forms.py
-import shelve, User
+from Forms import CreateUserFeedback, CreateProduct   # Input the objects from Forms.py
+from Product import Product
+import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
-
 
 
 app = Flask(__name__)
 
 
 # '/' indicates the root directory of the website
-@app.route('/', methods=['GET', 'POST'])
-def clothesInfo():
-    return render_template('clothesInfo.html', discount = False)
-
-
-@app.route('/clothesInfo')
+@app.route('/')
 def home():
     return render_template('home.html')
 
+@app.route('/createProduct', methods=['GET', 'POST'])
+def createProduct():
+    updateProductForm = CreateProduct(request.form)
+    if request.method == 'POST' and updateProductForm.validate():
+        itemsDict = {}
+        db = shelve.open('items.db', 'c')
 
-@app.route('/feedback')
-def feedback():
-    return render_template('feedback.html')
+        try:
+            itemsDict = db['Product']
+        except:
+            print('Error in retrieving Items from items.db.')
+
+        item = Product.Product(updateProductForm.name.data, updateProductForm.price.data, updateProductForm.color.data, updateProductForm.size.data, updateProductForm.quantity.data, updateProductForm.gender.data, updateProductForm.description.data)
+        itemsDict[item.get_itemID()] = item
+        db['Product'] = itemsDict
+        db.close()
+
+        return redirect(url_for('retrieveProducts'))
+    return render_template('createProduct.html', form=updateProductForm, status='admin')
 
 
-@app.route('/transaction')
-def transaction():
-    return render_template('transaction.html')
+@app.route('/retrieveProducts')
+def retrieveProducts():
+    itemsDict = {}
+    db = shelve.open('items.db', 'r')
+    itemsDict = db['Product']
+    db.close()
+
+    itemsList = []
+    for key in itemsDict:
+        item = itemsDict.get(key)
+        itemsList.append(item)
+
+    return render_template('retrieveProducts.html', itemsList=itemsList, count=len(itemsList), status='admin')
 
 
-@app.route('/shop')
-def shop():
-    return render_template('shop.html')
+@app.route('/deleteProduct/<int:id>', methods=['POST'])
+def deleteProduct(id):
+    itemsDict = {}
+    db = shelve.open('items.db', 'w')
+    itemsDict = db['Product']
+
+    itemsDict.pop(id)
+
+    db['Product'] = itemsDict
+    db.close()
+
+    return redirect(url_for('retrieveProducts'))
 
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+@app.route('/clothesInfo/<int:id>', methods=['GET', 'POST'])
+def clothesInfo(id):
+    clothesInfoForm = CreateProduct(request.form)
+    getOrder = CreateProduct(request.form)
+    if request.method == 'POST' and clothesInfoForm.validate():
+        itemDict = {}
+        db = shelve.open('items.db', 'w')
+        itemDict = db['Product']
 
+        cartDict = {}
+        db = shelve.open('cart.db', 'c')
 
+        try:
+            cartDict = db['Cart']
+        except:
+            print('Error in retrieving Items from cart.db.')
+
+        cart = Product.Product(getOrder.name.data, getOrder.price.data, getOrder.color.data, getOrder.size.data, getOrder.quantity.data, getOrder.gender.data, getOrder.description.data)
+        cartDict[cart.get_itemID()] = cart
+
+        item = itemDict.get(id)
+        item.set_name(clothesInfoForm.name.data)
+        item.set_price(clothesInfoForm.price.data)
+        item.set_color(clothesInfoForm.color.data)
+        item.set_size(clothesInfoForm.size.data)
+        item.set_quantity(clothesInfoForm.quantity.data)
+        item.set_gender(clothesInfoForm.gender.data)
+        item.set_description(clothesInfoForm.description.data)
+
+        db['Product'] = itemDict
+        db['Cart'] = cartDict
+        db.close()
+        db.close()
+
+        itemsList = []
+        for key in itemDict:
+            item = itemDict.get(key)
+            itemsList.append(item)
+
+            return redirect(url_for('retrieveProducts'))
+
+    else:
+        itemDict = {}
+        db = shelve.open('items.db', 'r')
+        itemDict = db['Product']
+        db.close()
+
+        item = itemDict.get(id)
+        clothesInfoForm.name.data = item.get_name()
+        clothesInfoForm.price.data = item.get_price()
+        clothesInfoForm.color.data = item.get_color()
+        clothesInfoForm.size.data = item.get_size()
+        clothesInfoForm.gender.data = item.get_gender()
+        clothesInfoForm.quantity.data = item.get_quantity()
+        clothesInfoForm.description.data = item.get_description()
+
+        itemsList = []
+        for key in itemDict:
+            item = itemDict.get(key)
+            itemsList.append(item)
+
+        return render_template('clothesInfo.html', status='user', form=clothesInfoForm, id=id, discount=False, name=clothesInfoForm.name.data)
+
+    
 paypal.configure({
     "mode": "sandbox",  # sandbox or live
     "client_id": "ARJH-zCA-RA5S_IfUZVN24eiWHjHKtfsWJ8bSY8q6G2YEs_HjEhGTHMSMC9p89n1usSef78-wKLxd00y",
@@ -54,7 +142,7 @@ def to_json(func):
     return wrapper
 
 
-@app.route('/')
+@app.route('/t')
 def index():
     history = paypal.Payment.all({"count": 50})
     history_dic = {}
@@ -242,6 +330,26 @@ def refund_payment():
         print("Unable to Refund")
         print(refund.error)
         return 44
+
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
+
+@app.route('/transaction')
+def transaction():
+    return render_template('transaction.html')
+
+
+@app.route('/shop')
+def shop():
+    return render_template('shop.html')
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
