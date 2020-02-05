@@ -1,5 +1,5 @@
 from flask import *
-from Forms import CreateUserFeedback, CreateProduct   # Input the objects from Forms.py
+from Forms import CreateUserFeedback, CreateProduct, R   # Input the objects from Forms.py
 from Product import Product
 import shelve, User, Product
 import paypalrestsdk as paypal
@@ -336,10 +336,41 @@ def refund_payment():
 def feedback():
     return render_template('feedback.html')
 
-
-@app.route('/transaction')
+@app.route('/transaction', methods=['GET', 'POST'])
 def transaction():
-    return render_template('transaction.html')
+    updateProductForm = R(request.form)
+    if request.method == 'POST' and updateProductForm.validate():
+        infoDict = {}
+        db = shelve.open('info.db', 'c')
+
+        try:
+            infoDict = db['info']
+        except:
+            print('Error in retrieving Items from items.db.')
+
+        info = transaction.Product(updateProductForm.name.data, updateProductForm.email.data, updateProductForm.address.data, updateProductForm.state.data, updateProductForm.city.data, updateProductForm.zip.data)
+        infoDict[info.get_itemID()] = info
+        db['info'] = infoDict
+        db.close()
+
+        return redirect(url_for('invoice'))
+    return render_template('transaction.html', form=updateProductForm, status='admin')
+
+
+@app.route('/invoice')
+def invoice():
+    infoDict = {}
+    db = shelve.open('info.db', 'r')
+    infoDict = db['info']
+    db.close()
+
+    infoList = []
+    for key in infoDict:
+        info = infoDict.get(key)
+        infoList.append(info)
+
+    return render_template('invoice.html')
+
 
 
 @app.route('/shop')
