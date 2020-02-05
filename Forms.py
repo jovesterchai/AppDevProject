@@ -25,3 +25,12 @@ class AddToCart(Form):
     price = DecimalField('Price', [validators.NumberRange(min=1, max=1000, message='Invalid Price.')])
     quantity = IntegerField('Quantity', [validators.NumberRange(min=1, max=500, message='Invalid Quantity.')])
     description = TextAreaField('Description', [validators.Optional()])
+
+
+class R(Form):
+    name = StringField('Full Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    email = StringField('Email', [validators.Length(min=1, max=150), validators.DataRequired()])
+    address = StringField('Address', [validators.Length(min=1, max=150), validators.DataRequired()])
+    city = StringField('City', [validators.Length(min=1, max=150), validators.DataRequired()])
+    state = StringField('State', [validators.Length(min=1, max=150), validators.DataRequired()])
+    zip = IntegerField('Zip', [validators.NumberRange(min=1000, max=10000, message='Invalid Quantity.')])
