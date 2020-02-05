@@ -1,25 +1,38 @@
 {% extends "base.html" %}
-{% block title %}Our Website - Clothes Information{% endblock %}
+{% from "includes/_formHelper.html" import render_field %}
+{% block title %}Our Website - Clothes Information{% endblock %}}
+
 {% block content %}
+{% from "includes/_formhelper.html" import render_field %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+{% if status == "user" %}
 <div style='margin: 8px'>
     <div style='float: left'>
         <a style="margin-right: 8px" href="/">Home</a>
         <a style="margin-right: 6px; font-size: 15px">></a>
-        <a style="margin-right: 8px" href="#">Clothes</a>
+        <a style="margin-right: 8px" href="/retrieveProducts">Clothes</a>
         <a style="margin-right: 6px; font-size: 15px">></a>
         <a style="margin-right: 8px" href="#">Top</a>
         <a style="margin-right: 6px; font-size: 15px">></a>
         <a style="margin-right: 8px" href="#">Women's</a>
         <a style="margin-right: 6px; font-size: 15px">></a>
-        <a style="margin-right: 8px">Drop Shoulder V Neck Oversized Sweater - Red Wine S</a>
+        {% if id == 1 %}
+        <a style="margin-right: 8px">{{ name }}</a>
+        {% elif id == 2 %}
+        <a style="margin-right: 8px">{{ name }}</a>
+        {% else %}
+        <p>Item Not Found.</p>
+        {% endif %}
     </div>
     <br>
     <div>
         <div style='margin: 50px; margin-top: 40px'>
             <p>Product Details</p>
             <hr>
-            <div style='float: left; margin-bottom: 40px'>
+            <div style='float: left; margin-bottom: 40px; width: 600px'>
+                {% if id == 1 %}
                 <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284111313370.jpg" style="width : 80%; float: right; margin-top: 7px; border-style: solid; border-width: 15px; border-color: white">
                 <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284111313370.jpg"  style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
                 <br>
@@ -28,57 +41,71 @@
                 <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284261580453.jpg" style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
                 <br>
                 <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2018/09/20thumb-img/1541723284460178514.jpg" style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                {% elif id == 2 %}
+                <img src="https://img.ltwebstatic.com/images/pi/201709/d9/15042599330571430583_thumbnail_600x.webp" style="width : 75%; float: right; margin-top: 7px; margin-right: 20px; border-style: solid; border-width: 10px; border-height: 15px; border-color: white">
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2019/10/30thumb-img/1575485341277134440.jpg"  style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                <br>
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2019/10/30thumb-img/1575485341857295157.jpg"  style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                <br>
+                <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2019/10/30thumb-img/1575485342752493079.jpg" style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
+                {% else %}
+                <p>Item Not Found</p>
+                {% endif %}
             </div>
         </div>
-        <div style="float: left; margin-top: -35px; margin-left: 50px; padding: 10px; background-color: rgb(242, 242, 242); border-style: solid; border-width: thin">
-            <h4>Drop Shoulder V Neck Oversized Sweater - Red Wine S</h4>
-            {% if discount %}
-            <h1 style="font-size: 60px; font-weight: bold; font-color: rgb(204, 15, 95)">$32.20</h1>
-            {% else %}
-            <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$22.60<span style="color: black; margin-left: 5px; opacity: 0.5; font-size: 15px">Original Price: $32.20</span></h1>
+        <div style="width: 600px; float: left; margin-top: -35px; margin-left: 50px; padding: 10px; background-color: rgb(242, 242, 242); border-style: solid; border-width: thin">
+            <h4>{{ name }}</h4>
+            {% if id == 1 %}
+                {% if discount == False %}
+                <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$35.27</h1>
+                {% else %}
+                <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$21.99<span style="color: black; margin-left: 5px; opacity: 0.5; font-size: 15px">Original Price: $35.27</span></h1>
+                {% endif %}
+            {% elif id == 2 %}
+                {% if discount == False %}
+                <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$32.95</h1>
+                {% else %}
+                <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$14.99<span style="color: black; margin-left: 5px; opacity: 0.5; font-size: 15px">Original Price: $32.95</span></h1>
+                {% endif %}
             {% endif %}
             <hr>
-            <h6 style="margin-left: 11px; opacity: 0.8">COLOR :
-                <span style="margin-left: 37px; opacity: 1">
-                    <div class="custom-select" style="width: 170px;">
-                        <select>
-                            <option value="0">Red Wine</option>
-                            <option value="1">Black</option>
-                            <option value="2">Blue</option>
-                            <option value="3">Firebrick</option>
-                            <option value="4">Green</option>
-                            <option value="5">Light Blue</option>
-                            <option value="6">Mint Green</option>
-                            <option value="7">Orange Gold</option>
-                            <option value="8">Pink</option>
-                            <option value="9">Warm White</option>
-                        </select>
+            <form method="POST" action="">
+                <div class="form-group">
+                    {{ render_field(form.color, class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.size, class="form-check") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.quantity, class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.gender, class="form-control", disabled=True) }}
+                </div>
+                <div id="prof">
+                    <div class="form-group">
+                        {{ render_field(form.description, rows="10", class="form-control", disabled=True) }}
                     </div>
-                </span>
-            </h6>
-            <h6 style="margin-left: 34px; opacity: 0.8">SIZE :
-                <span style="margin-left: 37px; opacity: 1">
-                    <div class="custom-select" style="width: 85px;">
-                        <select>
-                            <option value="0">S</option>
-                            <option value="1">M</option>
-                            <option value="2">L</option>
-                        </select>
-                    </div>
-                </span>
-            </h6>
-            <h6 style="margin-left: 37px; opacity: 0.8">QTY :
-                <span style="margin-left: 37px; opacity: 1">
-                    <input name="quantity" type="number" style="padding-left: 9px">
-
-                </span>
-            </h6>
+                </div>
+            </form>
+            <form action="{{ url_for('shoppingCart') }}">
+                <input type="submit" value="ADD TO CART" class="btn btn-primary"/>
+            </form>
         </div>
     </div>
 </div>
+{% elif status == "admin" %}
+<h1>This is the Administators' page.</h1>
+{% endif %}
 <style>
-    * {
-    font-family: 'Montserrat', sans-serif;
-    }
+* {
+font-family: 'Montserrat', sans-serif;
+}
+button {
+margin: 2px;
+}
 </style>
+<script>
+</script>
 {% endblock %}
+
