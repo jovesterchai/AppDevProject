@@ -343,17 +343,57 @@ def transaction():
 
 
 @app.route('/shop')
-def shop():
-    return render_template('shop.html')
+def shops():
+    itemsDict = {}
+    db = shelve.open('items.db', 'r')
+    itemsDict = db['Product']
+    db.close()
+
+    itemsList = []
+    for key in itemsDict:
+        item = itemsDict.get(key)
+        itemsList.append(item)
+
+    return render_template('shop.html', itemsList=itemsList, count=len(itemsList), status='admin')
 
 
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-@app.route('/contactUs')
+@app.route('/contactUs', methods=['GET', 'POST'])
 def contactUs():
-    return render_template('contactUs.html')
+    updateFeedbackForm = contactUs(request.form)
+    if request.method == 'POST' and updateFeedbackForm.validate():
+        feedbackDict = {}
+        db = shelve.open('feedback.db', 'c')
+
+        try:
+            feedbackDict = db['Feedback']
+        except:
+            print('Error in retrieving feedback from Feedback.db.')
+
+        item = Product.Product(updateFeedbackForm.name.data, updateFeedbackForm.Name.data, updateFeedbackForm.country.data, updateFeedbackForm.Feedback.data)
+        feedbackDict[feedback.get_feedbackID()] = feedback
+        db['Feedback'] = feedbackDict
+        db.close()
+
+        return redirect(url_for('retrieveFeedback'))
+    return render_template('contactUs.html', form=updateFeedbackForm, status='admin')
+
+@app.route('/retrieveFeedback')
+def retrieveFeedback():
+    feedbackDict = {}
+    db = shelve.open('feedback.db', 'r')
+    feedbackDict = db['Feedback']
+    db.close()
+
+    itemsList = []
+    for key in feedbackDict:
+        feedback = feedbackDict.get(key)
+        feedbackList.append(feedback)
+
+    return render_template('retrieveFeedback.html', feedbackList=feedbackList, count=len(feedbackList), status='admin')
 
 
 if __name__ == '__main__':

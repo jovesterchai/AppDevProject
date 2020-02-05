@@ -33,7 +33,7 @@
                 <td>${{ item.get_price() }}</td>
                 <td>{{ item.get_name() }}</td>
                 <td>{{ item.get_gender() }}</td>
-                <td><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">MoreInfo</a></td>
+                <td><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">More Info</a></td>
                 <td>
                     {% if status == 'admin' %}
                     <form action="{{ url_for('deleteProduct', id=item.get_itemID()) }}" method="POST">
