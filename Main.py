@@ -351,9 +351,8 @@ def shop():
 def login():
     return render_template('login.html')
 
-
 @app.route('/contactUs')
-def login():
+def contactUs():
     return render_template('contactUs.html')
 
 

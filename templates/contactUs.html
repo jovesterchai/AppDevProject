@@ -1,1 +1,104 @@
-<h1>Contact Us Page!</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="includes/contactus.css">
+    <style>
+        body { background-image: url("http://barnovanta.com.au/wp-content/uploads/AdobeStock_159816048.jpeg");
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#" style="font-size: 25px" >End.</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Shop</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="shop.html">Link 1</a>
+                    <a class="dropdown-item" href="#">Link 2</a>
+                    <a class="dropdown-item" href="#">Link 3</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="contactUs.html">Contact Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+            </li>
+        </ul>
+    </nav>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="column">
+        <div class="card">
+            <br>
+            <img class="imgay" src="https://www.searchpng.com/wp-content/uploads/2019/08/Call-Icon-PNG-715x715.png"  width="75" height="75" alt="John">
+            <div class="container1">
+                <h2 >End.</h2>
+                <p class="title">Please contact us at</p>
+                <p>Hp: +65 9007 9923,</p>
+                <p>shaunsky27@gmail.com</p>
+                <p>Or find us at Nanyang Polytechnic Singapore</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+
+<div class="container">
+    <form method=post>
+
+        <label for="fname" class="outline" style="color: white ">First Name</label>
+        <br>
+        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <br>
+        <label class="outline" for="lname" style="color: white ">Last Name</label>
+        <br>
+        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+        <br>
+        <label for="country" class="outline" style="color: white ">Country</label>
+        <br>
+        <select id="country" name="country">
+            <option value="australia">Japan</option>
+            <option value="canada">Singapore</option>
+            <option value="usa">USA</option>
+        </select>
+
+        <textarea id="subject" name="subject" placeholder="Send us your thoughts!" style="height:200px"></textarea>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+</div>
+</body>
+</html>
