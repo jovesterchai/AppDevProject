@@ -8,6 +8,9 @@
 {% if status == 'admin' %}
 <form method="POST" action="">
     <div class="form-group">
+        {{ render_field(form.itemID, class="form-control") }}
+    </div>
+    <div class="form-group">
         {{ render_field(form.name, class="form-control") }}
     </div>
     <div class="form-group">

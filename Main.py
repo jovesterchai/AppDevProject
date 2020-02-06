@@ -30,7 +30,7 @@ def createProduct():
         except:
             print('Error in retrieving Items from items.db.')
 
-        item = Product.Product(createProductForm.name.data, createProductForm.price.data, createProductForm.color.data, createProductForm.size.data, createProductForm.quantity.data, createProductForm.gender.data, createProductForm.description.data)
+        item = Product.Product(createProductForm.itemID.data, createProductForm.name.data, createProductForm.price.data, createProductForm.color.data, createProductForm.size.data, createProductForm.quantity.data, createProductForm.gender.data, createProductForm.description.data)
         itemsDict[item.get_itemID()] = item
         db['Product'] = itemsDict
         db.close()
