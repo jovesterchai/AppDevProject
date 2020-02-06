@@ -354,8 +354,13 @@ def transaction():
         db['info'] = infoDict
         db.close()
 
-        return redirect(url_for('invoice'))
+        return redirect(url_for('invoicetest'))
     return render_template('transaction.html', form=updateProductForm, status='admin')
+
+
+@app.route('/invoicetest')
+def invoicetest():
+    return render_template('invoicetest.html')
 
 
 @app.route('/invoice')
