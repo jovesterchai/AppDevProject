@@ -441,6 +441,19 @@ def cart():
 
     return render_template('shoppingCart.html', itemsList=itemsList, count=len(itemsList), status='admin')
 
+@app.route('/deleteFeedback/<int:id>', methods=['POST'])
+def deleteFeedback(id):
+    feedbackDict = {}
+    db = shelve.open('feedback.db', 'w')
+    feedbackDict = db['Feedback']
+
+    feedbackDict.pop(id)
+
+    db['Feedback'] = feedbackDict
+    db.close()
+
+    return redirect(url_for('retrieveFeedback'))
+
 if __name__ == '__main__':
     app.run()
 
