@@ -392,9 +392,10 @@ def shops():
 def login():
     return render_template('login.html')
 
+
 @app.route('/contactUs', methods=['GET', 'POST'])
-def contactUs():
-    updateFeedbackForm = contactUs(request.form)
+def createFeedback():
+    updateFeedbackForm = createFeedback(request.form)
     if request.method == 'POST' and updateFeedbackForm.validate():
         feedbackDict = {}
         db = shelve.open('feedback.db', 'c')
@@ -404,7 +405,7 @@ def contactUs():
         except:
             print('Error in retrieving feedback from Feedback.db.')
 
-        item = Product.Product(updateFeedbackForm.name.data, updateFeedbackForm.Name.data, updateFeedbackForm.country.data, updateFeedbackForm.Feedback.data)
+        feedback = Feedback.Feedback(updateFeedbackForm.name.data, updateFeedbackForm.country.data, updateFeedbackForm.feedbackZ.data)
         feedbackDict[feedback.get_feedbackID()] = feedback
         db['Feedback'] = feedbackDict
         db.close()
@@ -419,7 +420,7 @@ def retrieveFeedback():
     feedbackDict = db['Feedback']
     db.close()
 
-    itemsList = []
+    feedbackList = []
     for key in feedbackDict:
         feedback = feedbackDict.get(key)
         feedbackList.append(feedback)
