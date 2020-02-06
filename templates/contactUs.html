@@ -12,35 +12,127 @@
         body { background-image: url("http://barnovanta.com.au/wp-content/uploads/AdobeStock_159816048.jpeg");
             background-size: 100% 100%;
         }
+
+.container {
+  margin: auto;
+  width: 50%;
+  border-radius: 5px;
+  background-color: #;
+  padding: 20px;
+}
+
+
+
+
+.column {
+  margin: auto
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  margin: auto;
+}
+
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+
+.card {
+  box-shadow: 0 10px 12px 0 rgba(0, 0, 0, 1);
+  text-align: center;
+
+}
+
+.container1 {
+  padding: 0 16px;
+  text-align: center;
+}
+
+}
+/* Clear floats */
+.container1::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.img {
+  border-radius: 50%;
+  width:33%;
+
+
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 0px 12px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+.outline {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    te
+}
+.imgay {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body  {
+            background-image: url("http://barnovanta.com.au/wp-content/uploads/AdobeStock_159816048.jpeg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100%;
+        }
+.form-group {
+    max-width: 1000px;
+    margin: auto;
+    }
+h1 {
+    color: white;
+    text-align: center;
+    }
+.btn btn-primary {
+    <text-></text->align: center;
+    }
+
     </style>
+    <script>
+function myFunction() {
+  alert("Your feedback has been sent! thankiew!");
+}
+</script>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="#" style="font-size: 25px" >End.</a>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Shop</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="shop.html">Link 1</a>
-                    <a class="dropdown-item" href="#">Link 2</a>
-                    <a class="dropdown-item" href="#">Link 3</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contactUs.html">Contact Us</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-            </li>
-        </ul>
-    </nav>
+    <a class="navbar-brand" href="#" style="font-size: 25px">End.</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="shop">Shop</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="contactUs">Contact Us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+        </li>
+    </ul>
+</nav>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -58,9 +150,10 @@
     <div class="column">
         <div class="card">
             <br>
-            <img class="imgay" src="https://www.searchpng.com/wp-content/uploads/2019/08/Call-Icon-PNG-715x715.png"  width="75" height="75" alt="John">
+            <img class="imgay" src="https://www.searchpng.com/wp-content/uploads/2019/08/Call-Icon-PNG-715x715.png"
+                 width="75" height="75" alt="John">
             <div class="container1">
-                <h2 >End.</h2>
+                <h2>End.</h2>
                 <p class="title">Please contact us at</p>
                 <p>Hp: +65 9007 9923,</p>
                 <p>shaunsky27@gmail.com</p>
@@ -115,10 +208,9 @@
             {{ render_field(form.feedbackZ, class="form-control") }}
         </div>
     </div>
-    <input type="submit" value="ADD FEEDBACK" class="btn btn-primary"/>
+    <input type="submit" value="ADD FEEDBACK" class="btn btn-primary" onclick="myFunction()"/>
 </form>
 
 
 </body>
--->
 </html>

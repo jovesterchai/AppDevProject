@@ -404,7 +404,7 @@ def createFeedback():
         db['Feedback'] = feedbackDict
         db.close()
 
-        return redirect(url_for('retrieveFeedback'))
+        return redirect(url_for('home'))
     return render_template('contactUs.html', form=updateFeedbackForm, status='admin')
 
 @app.route('/retrieveFeedback')
