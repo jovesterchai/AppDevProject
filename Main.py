@@ -1,9 +1,10 @@
 from flask import *
-from Forms import CreateUserFeedback, CreateProduct, R   # Input the objects from Forms.py
+from Forms import CreateFeedback, CreateProduct, R   # Input the objects from Forms.py
 from Product import Product
 import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
+import Feedback
 
 
 app = Flask(__name__)
@@ -395,7 +396,7 @@ def login():
 
 @app.route('/contactUs', methods=['GET', 'POST'])
 def createFeedback():
-    updateFeedbackForm = createFeedback(request.form)
+    updateFeedbackForm = CreateFeedback(request.form)
     if request.method == 'POST' and updateFeedbackForm.validate():
         feedbackDict = {}
         db = shelve.open('feedback.db', 'c')
