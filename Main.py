@@ -87,27 +87,13 @@ def clothesInfo(id):
 
         db['Product'] = itemDict
         db.close()
-        if request.method == 'POST':
-            cartDict = {}
-            db = shelve.open('cart.db', 'c')
 
-            try:
-                itemsDict = db['Cart']
-            except:
-                print('Error in retrieving Items from cart.db.')
+        itemsList = []
+        for key in itemDict:
+            item = itemDict.get(key)
+            itemsList.append(item)
 
-            cart = Cart.Cart(createProductForm.name.data, createProductForm.price.data, createProductForm.color.data, createProductForm.size.data, createProductForm.quantity.data, createProductForm.gender.data, createProductForm.description.data)
-            cartDict[cart.get_itemID()] = cart
-            db['Product'] = cartDict
-            db.close()
-
-
-            itemsList = []
-            for key in itemDict:
-                item = itemDict.get(key)
-                itemsList.append(item)
-
-            return redirect(url_for('retrieveProducts'))
+        return redirect(url_for('retrieveProducts'))
 
     else:
         itemDict = {}
@@ -115,12 +101,21 @@ def clothesInfo(id):
         itemDict = db['Product']
         db.close()
 
+        item = itemDict.get(id)
+        createProductForm.name.data = item.get_name()
+        createProductForm.price.data = item.get_price()
+        createProductForm.color.data = item.get_color()
+        createProductForm.size.data = item.get_size()
+        createProductForm.quantity.data = item.get_quantity()
+        createProductForm.gender.data = item.get_gender()
+        createProductForm.description.data = item.get_description()
+
         itemsList = []
         for key in itemDict:
             item = itemDict.get(key)
             itemsList.append(item)
 
-        return render_template('clothesInfo.html', status='user', form=createProductForm, id=id, discount=False, name=createProductForm.name.data)
+        return render_template('clothesInfo.html', status='user', form=createProductForm, id=id, discount=False, name=createProductForm.name.data, gender=createProductForm.gender.data)
 
     
 paypal.configure({
