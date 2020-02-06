@@ -1,6 +1,7 @@
 from flask import *
 from Forms import CreateUserFeedback, CreateProduct, R   # Input the objects from Forms.py
 from Product import Product
+from transaction import Product
 import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
@@ -348,7 +349,7 @@ def transaction():
         except:
             print('Error in retrieving Items from items.db.')
 
-        info = transaction.Product(updateProductForm.name.data, updateProductForm.email.data, updateProductForm.address.data, updateProductForm.state.data, updateProductForm.city.data, updateProductForm.zip.data)
+        info = transaction.Product(updateProductForm.name.data, updateProductForm.email.data, updateProductForm.address.data, updateProductForm.city.data, updateProductForm.state.data, updateProductForm.zip.data)
         infoDict[info.get_itemID()] = info
         db['info'] = infoDict
         db.close()
