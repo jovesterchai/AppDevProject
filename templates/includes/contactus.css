@@ -1,0 +1,109 @@
+/* Style inputs with type="text", select elements and textareas */
+input[type=text], select, textarea {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: grey;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container {
+  margin: auto;
+  width: 50%;
+  border-radius: 5px;
+  background-color: #;
+  padding: 20px;
+}
+
+
+
+/* Three columns side by side */
+.column {
+  margin: auto
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  margin: auto;
+}
+
+/* Display the columns below each other instead of side by side on small screens */
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+/* Add some shadows to create a card effect */
+.card {
+  box-shadow: 0 10px 12px 0 rgba(0, 0, 0, 1);
+  text-align: center;
+
+}
+
+/* Some left and right padding inside the container */
+.container1 {
+  padding: 0 16px;
+  text-align: center;
+}
+
+}
+/* Clear floats */
+.container1::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.img {
+  border-radius: 50%;
+  width:33%;
+
+
+}
+.container {
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 0px 12px 10px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+.outline {
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    te
+}
+.imgay {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body  {
+            background-image: url("http://barnovanta.com.au/wp-content/uploads/AdobeStock_159816048.jpeg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100%;
+        }
