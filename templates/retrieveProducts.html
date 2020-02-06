@@ -33,17 +33,11 @@
                 <td>${{ item.get_price() }}</td>
                 <td>{{ item.get_name() }}</td>
                 <td>{{ item.get_gender() }}</td>
-                <td><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">More Info</a></td>
+                <td><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">Update</a></td>
                 <td>
-                    {% if status == 'admin' %}
                     <form action="{{ url_for('deleteProduct', id=item.get_itemID()) }}" method="POST">
                         <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Product?')">
                     </form>
-                    {% elif status == 'user' %}
-                    <form action="">
-                        <input type="submit" class="btn btn-info" value="ADD TO CART"/>
-                    </form>
-                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
