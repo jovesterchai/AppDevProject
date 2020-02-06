@@ -2,7 +2,7 @@ from flask import *
 from Forms import CreateFeedback, CreateProduct, R   # Input the objects from Forms.py
 from Product import Product
 
-from transaction import Product
+import invoice
 import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
@@ -145,8 +145,9 @@ def index():
     return render_template("index.html", **locals())
 
 
-@app.route('/paypal_Return', methods=['GET'])
-def paypal_Return():
+@app.route('/paypal_Return/<int:id>', methods=['GET'])
+def paypal_Return(id):
+    updateProductForm = R(request.form)
     # ID of the payment. This ID is provided when creating payment.
     paymentId = request.args['paymentId']
     payer_id = request.args['PayerID']
@@ -155,14 +156,14 @@ def paypal_Return():
     # PayerID is required to approve the payment.
     if payment.execute({"payer_id": payer_id}):  # return True or False
         print("Payment[%s] execute successfully" % (payment.id))
-        return 'Payment execute successfully!' + payment.id
+        return render_template('receipt.html', id=id)
     else:
         print(payment.error)
         return 'Payment execute ERROR!'
 
 
-@app.route('/paypal_payment', methods=['GET'])
-def paypal_payment():
+@app.route('/paypal_payment/<int:id>', methods=['GET'])
+def paypal_payment(id):
     # Payment
     # A Payment Resource; create one using
     # the above types and intent as 'sale'
@@ -211,7 +212,7 @@ def paypal_payment():
                 # Convert to str to avoid google appengine unicode issue
                 # https://github.com/paypal/rest-api-sdk-python/pull/58
                 redirect_url = str(link.href)
-                print("Redirect for approval: %s" % (redirect_url))
+                print("Redirect for approval: %s" % (link.href))
                 return redirect(redirect_url)
     else:
         print("Error while creating payment:")
@@ -324,25 +325,31 @@ def refund_payment():
 def feedback():
     return render_template('feedback.html')
 
-@app.route('/transaction', methods=['GET', 'POST'])
-def transaction():
-    updateProductForm = R(request.form)
-    if request.method == 'POST' and updateProductForm.validate():
-        infoDict = {}
-        db = shelve.open('info.db', 'c')
-
-        try:
-            infoDict = db['info']
-        except:
-            print('Error in retrieving Items from items.db.')
-
-        info = transaction.Product(updateProductForm.name.data, updateProductForm.email.data, updateProductForm.address.data, updateProductForm.city.data, updateProductForm.state.data, updateProductForm.zip.data)
-        infoDict[info.get_itemID()] = info
-        db['info'] = infoDict
+@app.route('/transaction/<id>', methods=['GET', 'POST'])
+def transaction(id):
+    if request.method == 'POST':
+        invoice2 = invoice.Invoice(id,0)
+        db = shelve.open('invoice.db', 'c')
+        db['Invoice'] = {}
+        invoiceDict = db['Invoice']
+        invoiceDict[len(invoiceDict)] = invoice2
+        db['Invoice'] = invoiceDict
+        itemsDict = {}
+        db = shelve.open('items.db', 'r')
+        itemsDict = db['Product']
         db.close()
 
-        return redirect(url_for('invoicetest'))
-    return render_template('transaction.html', form=updateProductForm, status='admin')
+        itemsList = []
+        for key in itemsDict:
+            item = itemsDict.get(key)
+            itemsList.append(item)
+        print(itemsDict)
+        return render_template('receipt.html', invoice=invoice2, itemsList=itemsDict, count=len(itemsList))
+    else:
+        updateProductForm = R(request.form)
+
+
+        return render_template('transaction.html', form=updateProductForm, id=id)
 
 
 @app.route('/receipt')

@@ -130,14 +130,17 @@ Receipt
                     <tr>
                       <td height="10" colspan="4"></td>
                     </tr>
-                    {% for item in itemsList %}
-                        <tr>
-                            <td>{{ item.get_name() }}</td>
-                            <td>${{ item.get_price() }}</td>
-                            <td>{{ item.get_quantity() }}</td>
-                            <td>{{ item.get_price() }}</td>
-                        </tr>
-                    {% endfor %}
+                    <tr>
+                        <td>
+                            {{ itemsList[invoice.get_itemID()|int].get_name() }}
+                        </td>
+                        <td>
+                            {{ itemsList[invoice.get_itemID()|int].get_price() }}
+                        </td>
+                        <td>
+                            1
+                        </td>
+                    </tr>
                     <!--<tr>
                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">HEATTECH LINED PANTS</td>
                       <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small>$150</small></td>
