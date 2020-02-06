@@ -51,7 +51,7 @@ def retrieveProducts():
         item = itemsDict.get(key)
         itemsList.append(item)
 
-    return render_template('retrieveProducts.html', itemsList=itemsList, count=len(itemsList), status='admin')
+    return render_template('retrieveProducts.html', itemsList=itemsList, count=len(itemsList), status='user')
 
 
 @app.route('/deleteProduct/<int:id>', methods=['POST'])
@@ -81,8 +81,6 @@ def clothesInfo(id):
         item.set_price(createProductForm.price.data)
         item.set_color(createProductForm.color.data)
         item.set_size(createProductForm.size.data)
-        item.set_quantity(createProductForm.quantity.data)
-        item.set_gender(createProductForm.gender.data)
         item.set_description(createProductForm.description.data)
 
         db['Product'] = itemDict
@@ -347,25 +345,19 @@ def transaction():
     return render_template('transaction.html', form=updateProductForm, status='admin')
 
 
-@app.route('/invoicetest')
+@app.route('/receipt')
 def invoicetest():
-    return render_template('invoicetest.html')
-
-
-@app.route('/invoice')
-def invoice():
-    infoDict = {}
-    db = shelve.open('info.db', 'r')
-    infoDict = db['info']
+    itemsDict = {}
+    db = shelve.open('items.db', 'r')
+    itemsDict = db['Product']
     db.close()
 
-    infoList = []
-    for key in infoDict:
-        info = infoDict.get(key)
-        infoList.append(info)
+    itemsList = []
+    for key in itemsDict:
+        item = itemsDict.get(key)
+        itemsList.append(item)
 
-    return render_template('invoice.html')
-
+    return render_template('receipt.html', itemsList=itemsList, count=len(itemsList))
 
 
 @app.route('/shop')

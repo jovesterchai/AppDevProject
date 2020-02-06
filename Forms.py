@@ -8,6 +8,7 @@ class CreateUserFeedback(Form):
 
 
 class CreateProduct(Form):
+    itemID = IntegerField('Item ID', [validators.NumberRange(min=100000, max=999999, message='Invalid Item ID.')])
     name = StringField('Product Name', [validators.Length(min=1, max=150), validators.DataRequired()])
     color = SelectMultipleField('Colors', [validators.DataRequired()], choices=[('Red Wine', 'Red Wine'), ('Black', 'Black'), ('Blue', 'Blue'), ('Firebrick', 'Firebrick'), ('Green', 'Green'), ('Light Blue', 'Light Blue'), ('Orange Gold', 'Orange Gold'), ('Pink', 'Pink'), ('Warm White', 'Warm White')], default='Red Wine')
     size = RadioField('Sizes', choices=[('S', 'S'), ('M', 'M'), ('L', 'L')], default='S')
