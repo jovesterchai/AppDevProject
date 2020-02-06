@@ -1,9 +1,9 @@
 from flask import *
 from Forms import CreateFeedback, CreateProduct, R   # Input the objects from Forms.py
 from Product import Product
-from Cart import Cart
+
 from transaction import Product
-import shelve, User, Product, Cart
+import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
 import Feedback
