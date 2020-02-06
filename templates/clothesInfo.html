@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "includes/_formHelper.html" import render_field %}
 {% block title %}Our Website - Clothes Information{% endblock %}}
 
 {% block content %}
@@ -18,13 +17,7 @@
         <a style="margin-right: 6px; font-size: 15px">></a>
         <a style="margin-right: 8px" href="#">Women's</a>
         <a style="margin-right: 6px; font-size: 15px">></a>
-        {% if id == 1 %}
-        <a style="margin-right: 8px">{{ name }}</a>
-        {% elif id == 2 %}
-        <a style="margin-right: 8px">{{ name }}</a>
-        {% else %}
-        <p>Item Not Found.</p>
-        {% endif %}
+        <a style="margin-right: 8px">{{ name }} - {{ gender }}</a>
     </div>
     <br>
     <div>
@@ -49,12 +42,11 @@
                 <br>
                 <img src="https://gloimg.zafcdn.com/zaful/pdm-product-pic/Clothing/2019/10/30thumb-img/1575485342752493079.jpg" style="width: 20%; margin-bottom: 5px; border-style: solid; border-width: thin">
                 {% else %}
-                <p>Item Not Found</p>
                 {% endif %}
             </div>
         </div>
         <div style="width: 600px; float: left; margin-top: -35px; margin-left: 50px; padding: 10px; background-color: rgb(242, 242, 242); border-style: solid; border-width: thin">
-            <h4>{{ name }}</h4>
+            <h4>{{ name }} - {{ gender }}</h4>
             {% if id == 1 %}
                 {% if discount == False %}
                 <h1 style="font-size: 60px; font-weight: bold; color: rgb(204, 15, 95)">$35.27</h1>
@@ -87,13 +79,12 @@
                         {{ render_field(form.description, rows="10", class="form-control", disabled=True) }}
                     </div>
                 </div>
-            </form>
-            <form action="">
-                <input type="submit" value="ADD TO CART" class="btn btn-primary"/>
+                <a href="/transaction" class="btn btn-primary">CLICK TO BUY</a>
             </form>
         </div>
     </div>
 </div>
+<br>
 {% elif status == "admin" %}
 <h1>This is the Administators' page.</h1>
 {% endif %}

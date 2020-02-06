@@ -2,8 +2,8 @@ class Product:
     countID = 0
 
     def __init__(self, name, email, address, city, state, zip):
-        Product.countID += 1
-        self.__itemID = Product.countID
+        self.__class__.countID += 1
+        self.__itemID = self.__class__.countID
         self.__name = name
         self.__email = email
         self.__address = address

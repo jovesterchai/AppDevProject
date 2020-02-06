@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Product Library System - Shopping Cart{% endblock %}
+
+{% block content %}
+<h1 class="display-4">Shopping Cart</h1>
+<div>
+    {% if count == 0 %}
+    <p>There are no items.</p>
+    {% elif count == 1 %}
+    <p>There is 1 item.</p>
+    {% else %}
+    <p>There are {{ count }} items.</p>
+    {% endif %}
+</div>
+<br>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Price</th>
+                <th>Product Name</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in itemsList %}
+            <tr>
+                <td>- NIL -</td>
+                <td>$- NIL -</td>
+                <td>- NIL -</td>
+                <td>- NIL -</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <form action=" {{ url_for('transaction') }}">
+        <input type="submit" class="btn btn-info" value="CHECK OUT"/>
+    </form>
+</div>
+{% endblock %}

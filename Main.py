@@ -1,9 +1,12 @@
 from flask import *
-from Forms import CreateUserFeedback, CreateProduct, R   # Input the objects from Forms.py
+from Forms import CreateFeedback, CreateProduct, R   # Input the objects from Forms.py
 from Product import Product
+
+from transaction import Product
 import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
+import Feedback
 
 
 app = Flask(__name__)
@@ -14,10 +17,11 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
+
 @app.route('/createProduct', methods=['GET', 'POST'])
 def createProduct():
-    updateProductForm = CreateProduct(request.form)
-    if request.method == 'POST' and updateProductForm.validate():
+    createProductForm = CreateProduct(request.form)
+    if request.method == 'POST' and createProductForm.validate():
         itemsDict = {}
         db = shelve.open('items.db', 'c')
 
@@ -26,13 +30,13 @@ def createProduct():
         except:
             print('Error in retrieving Items from items.db.')
 
-        item = Product.Product(updateProductForm.name.data, updateProductForm.price.data, updateProductForm.color.data, updateProductForm.size.data, updateProductForm.quantity.data, updateProductForm.gender.data, updateProductForm.description.data)
+        item = Product.Product(createProductForm.name.data, createProductForm.price.data, createProductForm.color.data, createProductForm.size.data, createProductForm.quantity.data, createProductForm.gender.data, createProductForm.description.data)
         itemsDict[item.get_itemID()] = item
         db['Product'] = itemsDict
         db.close()
 
         return redirect(url_for('retrieveProducts'))
-    return render_template('createProduct.html', form=updateProductForm, status='admin')
+    return render_template('createProduct.html', form=createProductForm, status='admin')
 
 
 @app.route('/retrieveProducts')
@@ -66,36 +70,22 @@ def deleteProduct(id):
 
 @app.route('/clothesInfo/<int:id>', methods=['GET', 'POST'])
 def clothesInfo(id):
-    clothesInfoForm = CreateProduct(request.form)
-    getOrder = CreateProduct(request.form)
-    if request.method == 'POST' and clothesInfoForm.validate():
+    createProductForm = CreateProduct(request.form)
+    if request.method == 'POST' and createProductForm.validate():
         itemDict = {}
         db = shelve.open('items.db', 'w')
         itemDict = db['Product']
 
-        cartDict = {}
-        db = shelve.open('cart.db', 'c')
-
-        try:
-            cartDict = db['Cart']
-        except:
-            print('Error in retrieving Items from cart.db.')
-
-        cart = Product.Product(getOrder.name.data, getOrder.price.data, getOrder.color.data, getOrder.size.data, getOrder.quantity.data, getOrder.gender.data, getOrder.description.data)
-        cartDict[cart.get_itemID()] = cart
-
         item = itemDict.get(id)
-        item.set_name(clothesInfoForm.name.data)
-        item.set_price(clothesInfoForm.price.data)
-        item.set_color(clothesInfoForm.color.data)
-        item.set_size(clothesInfoForm.size.data)
-        item.set_quantity(clothesInfoForm.quantity.data)
-        item.set_gender(clothesInfoForm.gender.data)
-        item.set_description(clothesInfoForm.description.data)
+        item.set_name(createProductForm.name.data)
+        item.set_price(createProductForm.price.data)
+        item.set_color(createProductForm.color.data)
+        item.set_size(createProductForm.size.data)
+        item.set_quantity(createProductForm.quantity.data)
+        item.set_gender(createProductForm.gender.data)
+        item.set_description(createProductForm.description.data)
 
         db['Product'] = itemDict
-        db['Cart'] = cartDict
-        db.close()
         db.close()
 
         itemsList = []
@@ -103,7 +93,7 @@ def clothesInfo(id):
             item = itemDict.get(key)
             itemsList.append(item)
 
-            return redirect(url_for('retrieveProducts'))
+        return redirect(url_for('retrieveProducts'))
 
     else:
         itemDict = {}
@@ -112,20 +102,20 @@ def clothesInfo(id):
         db.close()
 
         item = itemDict.get(id)
-        clothesInfoForm.name.data = item.get_name()
-        clothesInfoForm.price.data = item.get_price()
-        clothesInfoForm.color.data = item.get_color()
-        clothesInfoForm.size.data = item.get_size()
-        clothesInfoForm.gender.data = item.get_gender()
-        clothesInfoForm.quantity.data = item.get_quantity()
-        clothesInfoForm.description.data = item.get_description()
+        createProductForm.name.data = item.get_name()
+        createProductForm.price.data = item.get_price()
+        createProductForm.color.data = item.get_color()
+        createProductForm.size.data = item.get_size()
+        createProductForm.quantity.data = item.get_quantity()
+        createProductForm.gender.data = item.get_gender()
+        createProductForm.description.data = item.get_description()
 
         itemsList = []
         for key in itemDict:
             item = itemDict.get(key)
             itemsList.append(item)
 
-        return render_template('clothesInfo.html', status='user', form=clothesInfoForm, id=id, discount=False, name=clothesInfoForm.name.data)
+        return render_template('clothesInfo.html', status='user', form=createProductForm, id=id, discount=False, name=createProductForm.name.data, gender=createProductForm.gender.data)
 
     
 paypal.configure({
@@ -348,13 +338,18 @@ def transaction():
         except:
             print('Error in retrieving Items from items.db.')
 
-        info = transaction.Product(updateProductForm.name.data, updateProductForm.email.data, updateProductForm.address.data, updateProductForm.state.data, updateProductForm.city.data, updateProductForm.zip.data)
+        info = transaction.Product(updateProductForm.name.data, updateProductForm.email.data, updateProductForm.address.data, updateProductForm.city.data, updateProductForm.state.data, updateProductForm.zip.data)
         infoDict[info.get_itemID()] = info
         db['info'] = infoDict
         db.close()
 
-        return redirect(url_for('invoice'))
+        return redirect(url_for('invoicetest'))
     return render_template('transaction.html', form=updateProductForm, status='admin')
+
+
+@app.route('/invoicetest')
+def invoicetest():
+    return render_template('invoicetest.html')
 
 
 @app.route('/invoice')
@@ -395,7 +390,7 @@ def login():
 
 @app.route('/contactUs', methods=['GET', 'POST'])
 def createFeedback():
-    updateFeedbackForm = createFeedback(request.form)
+    updateFeedbackForm = CreateFeedback(request.form)
     if request.method == 'POST' and updateFeedbackForm.validate():
         feedbackDict = {}
         db = shelve.open('feedback.db', 'c')
@@ -427,9 +422,35 @@ def retrieveFeedback():
 
     return render_template('retrieveFeedback.html', feedbackList=feedbackList, count=len(feedbackList), status='admin')
 
+@app.route('/cart')
+def cart():
+    itemsDict = {}
+    db = shelve.open('items.db', 'r')
+    itemsDict = db['Product']
+    db.close()
+
+    itemsList = []
+    for key in itemsDict:
+        item = itemsDict.get(key)
+        itemsList.append(item)
+
+    return render_template('shoppingCart.html', itemsList=itemsList, count=len(itemsList), status='admin')
+
+@app.route('/deleteFeedback/<int:id>', methods=['POST'])
+def deleteFeedback(id):
+    feedbackDict = {}
+    db = shelve.open('feedback.db', 'w')
+    feedbackDict = db['Feedback']
+
+    feedbackDict.pop(id)
+
+    db['Feedback'] = feedbackDict
+    db.close()
+
+    return redirect(url_for('retrieveFeedback'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
 
 
 
