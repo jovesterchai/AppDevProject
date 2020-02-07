@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Account{% endblock %}
+{% block content %}
+{% if session.logged_in %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+ <form class ="form-login" method="POST" action="/account">
+    <h1>Welcome {{user.username}}</h1>
+     {{wtf.form_field(form.username)}}
+{% endif %}
+<div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>UserName</th>
+            <th>Password</th>
+            <th>Gender</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in usersList %}
+        <tr>
+            <td>{{ Customer.get_firstName() }}</td>
+            <td>{{ Customer.get_lastName() }}</td>
+            <td>{{ Customer.get_username()}}</td>
+            <td>{{ Customer.get_password()}}</td>
+            <td>{{ Customer.get_gender() }}</td>
+            <td><a href="/updateUser/{{user.get_userID()}}" class="btn btn-warning">Update your Informations</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

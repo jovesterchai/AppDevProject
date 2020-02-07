@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Library Loan System - Log In{% endblock %}
+{% block content %}
+{% from "includes/_formhelper.html" import render_field %}
+
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-image {
+    background-image: url("static/end4.jpg");
+    filter: blur(8px);
+    height: 1000px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Position text in the middle of the page/image */
+
+
+.mainCo {
+    filter: none;
+    overflow: hidden;
+    height: 60%;
+    width: 100%;
+    background-color: rgb(217, 217, 217);
+    color: black;
+    padding: 20px;
+    position: auto;
+    right: auto;
+}
+
+</style>
+<body>
+    <div class="bg-image"></div>
+    <div class="bg-text">
+
+    <div class="mainCo">
+        <h1 class="display-5">Login</h1>
+        <form action="" method="post">
+            <div class="container">
+        <hr>
+  <div class="form-group">
+ {{ render_field(form.username, class="form-control") }}
+  </div>
+  <div class="form-group">
+ {{ render_field(form.password, class="form-control") }}
+  </div>
+  <div class="form-group">
+ {{ errorResponse }}
+  </div>
+
+                <hr>
+
+ <input type="submit" value="Login"  class="btn btn-primary">
+  </div>
+
+        </form>
+
+        </div>
+
+      </div><!-- tab-content -->
+            </div>
+</div> <!-- /form -->
+</body>
+{% endblock %}
+
+
