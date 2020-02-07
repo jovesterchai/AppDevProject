@@ -413,7 +413,51 @@ input#img-4:checked ~ .nav-dots label#img-dot-4,
 input#img-5:checked ~ .nav-dots label#img-dot-5,
 input#img-6:checked ~ .nav-dots label#img-dot-6
 	background: rgba(0, 0, 0, 0.8);
+
+h1 {
+    text-align: center;
+    }
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 300px;
+  height: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  float: left;
 }
+
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, auto);
+  justify-content: center;
+  float: left;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 0.5px solid;
+  margin: 30px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.column {
+    float: left;
+    width: 15%;
+    padding: 10px 10px;
+    }
+.Center {
+            width:200px;
+            height:200px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -100px;
+        }
+
     </style>
 </head>
 <body>
@@ -549,7 +593,7 @@ input#img-6:checked ~ .nav-dots label#img-dot-6
 </div>
 <br>
 
-
+<!--
 <div>
     <table class="table table-striped">
         <thead>
@@ -573,5 +617,22 @@ input#img-6:checked ~ .nav-dots label#img-dot-6
         </tbody>
     </table>
 </div>
+-->
 
+        {% for item in itemsList %}
+    <div class="grid-container">
+        <div class="column">
+        <div class="card">
+            <div class="grid-item">
+                <!-- I wouldve put get item image if there was -->
+                <img src="jeans3.jpg" style="width:500">
+                <h1>{{ item.get_name() }}</h1>
+                <p class="price">${{ item.get_price() }}</p>
+                <p>{{ item.get_gender() }}</p>
+                <p><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">More Info</a></p>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
 </body>
