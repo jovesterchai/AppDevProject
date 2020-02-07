@@ -539,11 +539,6 @@ def shops():
     return render_template('shop.html', itemsList=itemsList, count=len(itemsList), status='admin')
 
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-
 @app.route('/contactUs', methods=['GET', 'POST'])
 def createFeedback():
     updateFeedbackForm = CreateFeedback(request.form)
