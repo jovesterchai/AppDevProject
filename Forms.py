@@ -6,7 +6,20 @@ class CreateUserFeedback(Form):
     membership = RadioField('Membership', choices=[('F', 'Fellow'), ('S', 'Senior'), ('P', 'Professional')], default='F')
     gender = SelectField('Gender', [validators.DataRequired()], choices=[('', 'Select'), ('F', 'Female'), ('M', 'Male')], default='')
 
+    
+class CreateUserForm(Form):
+    firstName = StringField("First Name", [validators.Length(min=1, max=150), validators.DataRequired()])
+    lastName = StringField("Last Name", [validators.Length(min=1, max=150), validators.DataRequired()])
+    username = StringField("Username",[validators.Length(min=1, max=150), validators.DataRequired()])
+    password = PasswordField('Password', [validators.Length(min=1, max=150), validators.   DataRequired()])
+    gender = SelectField("Gender", [validators.DataRequired()], choices=[("", "Select"), ("F", "Female"), ("M", "Male")], default = "")
 
+    
+class LoginForm(Form):
+    username = StringField("Username",[validators.Length(min=1, max=150), validators.DataRequired()])
+    password = PasswordField('Password', [validators.Length(min=1, max=150), validators.DataRequired()])
+
+    
 class CreateProduct(Form):
     itemID = IntegerField('Item ID', [validators.NumberRange(min=100000, max=999999, message='Invalid Item ID.')])
     name = StringField('Product Name', [validators.Length(min=1, max=150), validators.DataRequired()])
