@@ -225,6 +225,45 @@ def deleteProduct(id):
     return redirect(url_for('retrieveProducts'))
 
 
+@app.route('/updateProduct/<int:id>', methods=['GET', 'POST'])
+def updateProduct(id):
+    updateProductForm = CreateProduct(request.form)
+    if request.method == 'POST' and updateProductForm.validate():
+        itemDict = {}
+        db = shelve.open('items.db', 'w')
+        itemDict = db['Product']
+        item = itemDict.get(id)
+
+        item.set_name(updateProductForm.name.data)
+        item.set_price(updateProductForm.price.data)
+        item.set_color(updateProductForm.color.data)
+        item.set_size(updateProductForm.size.data)
+        item.set_quantity(updateProductForm.quantity.data)
+        item.set_gender(updateProductForm.gender.data)
+        item.set_description(updateProductForm.description.data)
+
+        db['Product'] = itemDict
+        db.close()
+        return redirect(url_for('retrieveProducts'))
+    else:
+        itemDict = {}
+        db = shelve.open('items.db', 'r')
+        itemDict = db['Product']
+        db.close()
+
+        item = itemDict.get(id)
+        updateProductForm.name.data = item.set_name()
+        updateProductForm.price.data = item.set_price()
+        updateProductForm.color.data = item.set_color()
+        updateProductForm.size.data = item.set_size()
+        updateProductForm.quantity.data = item.set_quantity()
+        updateProductForm.gender.data = item.get_gender()
+        updateProductForm.description.data = item.set_description()
+
+        return render_template('updateProduct.html', form=updateProductForm)
+
+
+
 @app.route('/clothesInfo/<int:id>', methods=['GET', 'POST'])
 def clothesInfo(id):
     createProductForm = CreateProduct(request.form)
