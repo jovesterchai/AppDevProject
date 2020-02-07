@@ -1,5 +1,5 @@
 from flask import *
-from Forms import CreateFeedback, CreateProduct, R   # Input the objects from Forms.py
+from Forms import CreateFeedback, CreateProduct, R, CreateUserForm, LoginForm   # Input the objects from Forms.py
 from Product import Product
 
 import invoice
