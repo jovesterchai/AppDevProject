@@ -2,10 +2,20 @@
 {% block title %}Library Loan System - Create User{% endblock %}
 {% block content %}
 {% from "includes/_formhelper.html" import render_field %}
+
+<style>
+ .form-group2{
+  color:#DC143C;
+  font-size: 150%;
+  font-weight: bold;
+ }
+</style>
+
 <h1 class="display-4">Create Account</h1>
- <div class="form-group">
+ <div class="form-group2">
  {{ error }}
  </div>
+<p>
 <form method="POST" action="">
 
  <div class="form-group">
@@ -28,7 +38,6 @@
  </div>
 
  <input type="submit" value="Submit"  class="btn btn-primary">
-
-
 </form>
+</p>
 {% endblock %}
