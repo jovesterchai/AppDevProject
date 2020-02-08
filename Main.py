@@ -1,4 +1,4 @@
-from flask import *
+from flask import Flask, render_template, request, redirect, url_for*
 from Forms import CreateFeedback, CreateProduct, R, CreateUserForm, LoginForm   # Input the objects from Forms.py
 from Product import Product
 
@@ -22,12 +22,15 @@ def home():
 @app.route("/login2", methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
+    errorResponse=''
     if request.method == 'POST':
+        errorResponse='Invalid Credentials'
+        correct = False
         if form.validate():
             if form.username.data=='staff':
                 if form.password.data=='staff890':
                     return redirect(url_for('retrieveUsers'))
-    return render_template("login2.html",form=form)
+    return render_template("login2.html",form=form,errorResponse=errorResponse)
 
 def checkUserExists(name):
     db = shelve.open('storage.db', 'r')
@@ -51,6 +54,7 @@ def useraccount():
         errorResponse='User does not exist'
         if form.validate():
             correct = False
+            id = 0
             usersDict = {}
             db = shelve.open('storage.db', 'r')
             try:
@@ -58,13 +62,14 @@ def useraccount():
                 for key in usersDict:
                     user = usersDict[key]
                     if user.get_username()==form.username.data:
+                        id = user.get_userID()
                         correct = user.get_password()==form.password.data;
                         if not correct:
                             errorResponse='Invalid password'
             except:
                 print("Error in retrieving Users from storage.db.")
             if correct:
-                return render_template("Retrieveaccount.html",name=form.username.data)
+                return render_template("Retrieveaccount.html",name=form.username.data,id=id)
     return render_template("useraccount.html",form=form,errorResponse=errorResponse)
 
 
@@ -129,15 +134,17 @@ def retrieveUsers():
  return render_template('retrieveUsers.html', usersList=usersList, count=len(usersList))
 
 
-@app.route('/updateUser/<id>/', methods=['GET', 'POST'])
-def updateUser(id):
+@app.route('/updateUser', methods=['GET', 'POST'])
+def updateUser():
+    id = request.args.get('page', default = 1, type = int)
     updateUserForm = CreateUserForm(request.form)
+
     if request.method == 'POST' and updateUserForm.validate():
         userDict = {}
         db = shelve.open('storage.db', 'w')
         userDict = db['Users']
 
-        user = userDict.get(id)
+        user = userDict.get()
         user.set_firstName(updateUserForm.firstName.data)
         user.set_lastName(updateUserForm.lastName.data)
         user.set_username(updateUserForm.username.data)
@@ -146,18 +153,19 @@ def updateUser(id):
 
         db['Users'] = userDict
         db.close()
-        return redirect(url_for('retrieveUsers'))
+        return redirect(url_for('Retrieveaccount'))
     else:
         userDict = {}
         db = shelve.open('storage.db', 'r')
         userDict = db['Users']
         db.close()
-        user = userDict.get(id)
+        user = userDict[id]
         updateUserForm.firstName.data = user.get_firstName()
         updateUserForm.lastName.data = user.get_lastName()
         updateUserForm.username.data = user.get_username()
         updateUserForm.gender.data = user.get_gender()
-        return render_template('updateUser.html',form=updateUserForm)
+    return render_template('updateUser.html',form=updateUserForm)
+
 
 
 @app.route('/deleteUser/<int:id>/', methods=['POST'])
