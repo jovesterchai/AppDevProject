@@ -50,6 +50,13 @@ body, html {
     right: auto;
 }
 
+
+ .form-group2{
+  color:#DC143C;
+  font-size: 150%;
+  font-weight: bold;
+ }
+
 </style>
 <body>
     <div class="bg-image"></div>
@@ -66,6 +73,10 @@ body, html {
  {{ render_field(form.password, class="form-control") }}
 
               <hr>
+
+                 <div class="form-group2">
+                  {{ errorResponse }}
+                 </div>
 
  <input type="submit" value="Login"  class="btn btn-primary">
             </div>
