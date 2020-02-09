@@ -42,12 +42,11 @@ class AddToCart(Form):
 
 
 class R(Form):
-    name = StringField('Full Name', [validators.Length(min=1, max=150), validators.DataRequired()])
-    email = StringField('Email', [validators.Length(min=1, max=150), validators.DataRequired()])
-    address = StringField('Address', [validators.Length(min=1, max=150), validators.DataRequired()])
-    city = StringField('City', [validators.Length(min=1, max=150), validators.DataRequired()])
-    state = StringField('State', [validators.Length(min=1, max=150), validators.DataRequired()])
-    zip = IntegerField('Zip', [validators.NumberRange(min=1000, max=10000000, message='Invalid Quantity.')])
+    name = StringField('name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    email = StringField('email', [validators.Length(min=1, max=150), validators.DataRequired()])
+    address = StringField('address', [validators.Length(min=1, max=150), validators.DataRequired()])
+    city = StringField('city', [validators.Length(min=1, max=150), validators.DataRequired()])
+    zip = IntegerField('zip', [validators.NumberRange(min=1000, max=10000000, message='Invalid Quantity.')])
 
 class CreateFeedback(Form):
     name = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])

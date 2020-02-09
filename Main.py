@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for*
+from flask import Flask, render_template, request, redirect, url_for
 from Forms import CreateFeedback, CreateProduct, R, CreateUserForm, LoginForm   # Input the objects from Forms.py
 from Product import Product
-
+import Transaction
 import invoice
 import shelve, User, Product
 import paypalrestsdk as paypal
@@ -529,35 +529,49 @@ def refund_payment():
 def feedback():
     return render_template('feedback.html')
 
+
 @app.route('/transaction/<id>', methods=['GET', 'POST'])
 def transaction(id):
-    if request.method == 'POST':
-        invoice2 = invoice.Invoice(id,0)
-        db = shelve.open('invoice.db', 'c')
-        db['Invoice'] = {}
-        invoiceDict = db['Invoice']
-        invoiceDict[len(invoiceDict)] = invoice2
-        db['Invoice'] = invoiceDict
-        itemsDict = {}
-        db = shelve.open('items.db', 'r')
-        itemsDict = db['Product']
-        db.close()
+    updateUserForm = R(request.form)
+    if request.method =='POST':
+        print("hi")
+        #POST
+        formDict = {}
+        db = shelve.open('form.db', 'c')
+        try:
+            formDict = db['Details']
+            print(updateUserForm.email.data)
+            print(updateUserForm.address.data)
+            print(updateUserForm.city.data)
+            print(updateUserForm.zip.data)
+            user = Transaction.Details(id, updateUserForm.email.data, updateUserForm.address.data, updateUserForm.city.data, updateUserForm.zip.data)
+            idx = len(formDict)
+            formDict[idx] = user
+            db['Details'] = formDict
 
-        itemsList = []
-        for key in itemsDict:
-            item = itemsDict.get(key)
-            itemsList.append(item)
-        print(itemsDict)
-        return render_template('receipt.html', invoice=invoice2, itemsList=itemsDict, count=len(itemsList))
+
+            print( "was stored in shelve successfully with userID =", idx)
+            print(formDict)
+            db.close()
+            itemsDict = {}
+            db = shelve.open('items.db', 'r')
+            itemsDict = db['Product']
+            db.close()
+
+            itemsList = []
+            for key in itemsDict:
+                item = itemsDict.get(key)
+                itemsList.append(item)
+            print(itemsDict)
+            return render_template('receipt.html', invoice=user, itemsList=itemsDict, count=len(itemsList))
+        except:
+            print("Error in retrieving Users from storage.db.")
     else:
-        updateProductForm = R(request.form)
-
-
-        return render_template('transaction.html', form=updateProductForm, id=id)
-
+        #GET
+        return render_template('transaction.html', form=updateUserForm, id=id)
 
 @app.route('/receipt')
-def invoicetest():
+def receipt():
     itemsDict = {}
     db = shelve.open('items.db', 'r')
     itemsDict = db['Product']
@@ -569,6 +583,8 @@ def invoicetest():
         itemsList.append(item)
 
     return render_template('receipt.html', itemsList=itemsList, count=len(itemsList))
+
+
 
 
 @app.route('/shop')
@@ -646,6 +662,14 @@ def deleteFeedback(id):
     db.close()
 
     return redirect(url_for('retrieveFeedback'))
+
+
+@app.route("/invoice")
+def invoice():
+    db = shelve.open('form.db', 'c')
+
+    formDict = db['Details']
+    return render_template("invoice.html", invoices=formDict)
 
 if __name__ == '__main__':
     app.run()
