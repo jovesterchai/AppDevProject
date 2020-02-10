@@ -1,8 +1,6 @@
-class Feedback:
-    countID = 0
+class UpdateStaffboard:
 
-    def __init__(self, name, number, feedbackZ):
-        Feedback.countID += 1
+    def __init__(CompanyDeveloper, Company):
         self.__feedbackID = Feedback.countID
         self.__name = name
         self.__number = number

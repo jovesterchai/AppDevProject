@@ -215,12 +215,12 @@ def createProduct():
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
-        file = request.files['files']
+        file = request.files['file']
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(str(createProductForm.Product.itemID.data + '.jpg'))
+            filename = secure_filename(str(createProductForm.itemID.data + '.jpg'))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             item = Product.Product(createProductForm.itemID.data, createProductForm.name.data,
@@ -234,7 +234,7 @@ def createProduct():
             db.close()
 
             return redirect(url_for('retrieveProducts'))
-        return render_template('createProduct.html', form=createProductForm, status='admin')
+    return render_template('createProduct.html', form=createProductForm, status='admin')
 
 
 
@@ -450,7 +450,7 @@ def createFeedback():
         except:
             print('Error in retrieving feedback from Feedback.db.')
 
-        feedback = Feedback.Feedback(updateFeedbackForm.name.data, updateFeedbackForm.country.data, updateFeedbackForm.feedbackZ.data)
+        feedback = Feedback.Feedback(updateFeedbackForm.name.data, updateFeedbackForm.number.data, updateFeedbackForm.feedbackZ.data)
         feedbackDict[feedback.get_feedbackID()] = feedback
         db['Feedback'] = feedbackDict
         db.close()
