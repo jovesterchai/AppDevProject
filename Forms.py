@@ -54,4 +54,4 @@ class R(Form):
 class CreateFeedback(Form):
     name = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
     number = IntegerField('Number', [validators.NumberRange(min=100000, max=99999999, message="Please use a proper handphone number")])
-    feedbackZ = TextAreaField('Feedback', [validators.Optional()])
+    feedbackZ = TextAreaField('Feedback', [validators.DataRequired()])
