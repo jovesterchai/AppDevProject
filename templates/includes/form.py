@@ -17,6 +17,9 @@ def home():
 def feedback():
     return render_template('feedback.html')
 
+@app.route('/AboutUs')
+def feedback():
+    return render_template('AboutUs.html')
 
 @app.route('/transaction')
 def transaction():
