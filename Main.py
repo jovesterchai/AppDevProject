@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from Forms import CreateFeedback, CreateProduct, R, CreateUserForm, LoginForm   # Input the objects from Forms.py
+
 from Product import Product
 import Transaction
 import invoice
@@ -12,13 +13,9 @@ import os
 
 app = Flask(__name__)
 
-
-# '/' indicates the root directory of the website
 @app.route('/')
 def home():
     return render_template('home.html')
-
-
 
 @app.route("/login2", methods=['GET', 'POST'])
 def login():

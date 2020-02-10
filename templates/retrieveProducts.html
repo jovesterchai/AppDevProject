@@ -20,19 +20,21 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Price</th>
-                <th>Product Name</th>
-                <th>Gender</th>
+                <th class="text-center align-middle">ID</th>
+                <th class="text-center align-middle">Picture</th>
+                <th class="text-center align-middle">Product Name</th>
+                <th class="text-center align-middle">Price</th>
+                <th class="text-center align-middle">Gender</th>
             </tr>
         </thead>
         <tbody>
         {% for item in itemsList %}
             <tr>
-                <td>{{ item.get_itemID() }}</td>
-                <td>${{ item.get_price() }}</td>
-                <td>{{ item.get_name() }}</td>
-                <td>{{ item.get_gender() }}</td>
+                <td class="text-center align-middle">{{ item.get_itemID() }}</td>
+                <td class="text-center align-middle"><img src="static/files/{{ item.get_images() }}" class="Picture" /></td>
+                <td class="text-center align-middle">{{ item.get_name() }}</td>
+                <td class="text-center align-middle">${{ item.get_price() }}</td>
+                <td class="text-center align-middle">{{ item.get_gender() }}</td>
                 <td><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">Update</a></td>
                 <td>
                     <form action="{{ url_for('deleteProduct', id=item.get_itemID()) }}" method="POST">

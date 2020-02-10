@@ -1,6 +1,7 @@
 class Product:
 
     def __init__(self, itemID, name, price, color, size, quantity, gender, description):
+        self.__images = ''
         self.__itemID = itemID
         self.__name = name
         self.__price = price
