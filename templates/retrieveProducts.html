@@ -31,7 +31,7 @@
         {% for item in itemsList %}
             <tr>
                 <td class="text-center align-middle">{{ item.get_itemID() }}</td>
-                <td class="text-center align-middle"><img src="static/files/{{ item.get_images() }}" class="Picture" /></td>
+                <td class="text-center align-middle"><img src="static/files/{{item.get_itemID() + '.jpg'}}" alt="imagePic" style="width:100%"></td>
                 <td class="text-center align-middle">{{ item.get_name() }}</td>
                 <td class="text-center align-middle">${{ item.get_price() }}</td>
                 <td class="text-center align-middle">{{ item.get_gender() }}</td>

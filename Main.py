@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from Forms import CreateFeedback, CreateProduct, R, CreateUserForm, LoginForm   # Input the objects from Forms.py
 
 from Product import Product
@@ -8,10 +8,24 @@ import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
 import Feedback
+from werkzeug.utils import secure_filename
+import string
+import random
 import os
 
 
+UPLOAD_FOLDER = 'static/files'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/')
 def home():
@@ -193,19 +207,35 @@ def createProduct():
     if request.method == 'POST' and createProductForm.validate():
         itemsDict = {}
         db = shelve.open('items.db', 'c')
-
         try:
             itemsDict = db['Product']
+            Product.Product.countID = db['CountID']
         except:
             print('Error in retrieving Items from items.db.')
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['files']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(str(createProductForm.Product.itemID.data + '.jpg'))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        item = Product.Product(createProductForm.itemID.data, createProductForm.name.data, createProductForm.price.data, createProductForm.color.data, createProductForm.size.data, createProductForm.quantity.data, createProductForm.gender.data, createProductForm.description.data)
-        itemsDict[item.get_itemID()] = item
-        db['Product'] = itemsDict
-        db.close()
+            item = Product.Product(createProductForm.itemID.data, createProductForm.name.data,
+                                   createProductForm.price.data, createProductForm.color.data,
+                                   createProductForm.size.data, createProductForm.quantity.data,
+                                   createProductForm.gender.data, createProductForm.description.data)
 
-        return redirect(url_for('retrieveProducts'))
-    return render_template('createProduct.html', form=createProductForm, status='admin')
+            itemsDict[item.get_itemID()] = item
+            db['Product'] = itemsDict
+            db['CountID'] = Product.Product.countID
+            db.close()
+
+            return redirect(url_for('retrieveProducts'))
+        return render_template('createProduct.html', form=createProductForm, status='admin')
+
 
 
 @app.route('/retrieveProducts')
@@ -671,9 +701,14 @@ def deleteFeedback(id):
 @app.route("/invoice")
 def invoice():
     db = shelve.open('form.db', 'c')
-
     formDict = db['Details']
-    return render_template("invoice.html", invoices=formDict)
+    db.close()
+
+    formList = []
+    for key in formDict:
+        item = formDict.get(key)
+        formList.append(item)
+    return render_template("invoice.html", invoices=formDict, count=len(formList))
 
 if __name__ == '__main__':
     app.run()
