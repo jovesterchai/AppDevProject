@@ -87,7 +87,6 @@ def logout():
 def aboutus():
     return render_template("aboutus.html")
 
-
 @app.route('/createUser', methods=['GET', 'POST'])
 def createUser():
     createUserForm = CreateUserForm(request.form)
@@ -105,7 +104,7 @@ def createUser():
         if checkUserExists(createUserForm.username.data):
             return render_template('createUser.html', form=createUserForm,error='User name exists')
         else:
-            user = User.User(createUserForm.firstName.data, createUserForm.lastName.data, createUserForm.username.data,createUserForm.password.data,createUserForm.gender.data)
+            user = User.User(createUserForm.firstName.data, createUserForm.lastName.data, createUserForm.username.data,createUserForm.password.data,createUserForm.gender.data,createUserForm.country.data,createUserForm.address.data,createUserForm.number.data)
             usersDict[user.get_userID()] = user
             db['Users'] = usersDict
             # Test codes
@@ -116,6 +115,7 @@ def createUser():
             db.close()
         return redirect(url_for('home'))
     return render_template('createUser.html', form=createUserForm,error='')
+
 
 
 @app.route('/retrieveUsers')
@@ -136,7 +136,7 @@ def retrieveUsers():
 
 @app.route('/updateUser', methods=['GET', 'POST'])
 def updateUser():
-    id = request.args.get('page', default = 1, type = int)
+    id = request.args.get('id', default = 1, type = int)
     updateUserForm = CreateUserForm(request.form)
 
     if request.method == 'POST' and updateUserForm.validate():
@@ -144,16 +144,19 @@ def updateUser():
         db = shelve.open('storage.db', 'w')
         userDict = db['Users']
 
-        user = userDict.get()
+        user = userDict[id]
         user.set_firstName(updateUserForm.firstName.data)
         user.set_lastName(updateUserForm.lastName.data)
         user.set_username(updateUserForm.username.data)
         user.set_password(updateUserForm.password.data)
         user.set_gender(updateUserForm.gender.data)
+        user.set_country(updateUserForm.country.data)
+        user.set_address(updateUserForm.address.data)
+        user.set_number(updateUserForm.number.data)
 
         db['Users'] = userDict
         db.close()
-        return redirect(url_for('Retrieveaccount'))
+        return render_template('updateUser.html',form=updateUserForm, error='Account has been updated')
     else:
         userDict = {}
         db = shelve.open('storage.db', 'r')
@@ -164,7 +167,10 @@ def updateUser():
         updateUserForm.lastName.data = user.get_lastName()
         updateUserForm.username.data = user.get_username()
         updateUserForm.gender.data = user.get_gender()
-    return render_template('updateUser.html',form=updateUserForm)
+        updateUserForm.country.data = user.get_country()
+        updateUserForm.address.data = user.get_address()
+        updateUserForm.number.data = user.get_number()
+    return render_template('updateUser.html',form=updateUserForm, error='')
 
 
 
