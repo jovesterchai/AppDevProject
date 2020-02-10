@@ -7,6 +7,7 @@ import shelve, User, Product
 import paypalrestsdk as paypal
 from paypalrestsdk import *
 import Feedback
+import os
 
 
 app = Flask(__name__)
@@ -85,7 +86,7 @@ def logout():
 
 @app.route("/aboutus")
 def aboutus():
-    return render_template("aboutus.html")
+    return render_template("us.html")
 
 @app.route('/createUser', methods=['GET', 'POST'])
 def createUser():
