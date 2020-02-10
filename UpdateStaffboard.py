@@ -1,28 +1,31 @@
 class UpdateStaffboard:
 
-    def __init__(CompanyDeveloper, Company):
-        self.__feedbackID = Feedback.countID
-        self.__name = name
-        self.__number = number
-        self.__feedbackZ = feedbackZ
+    def __init__(Self, CompanyDeveloper, CompanyExecutiveLead, AssistantExecutive, SalesLead):
+        self.__CompanyDeveloper = CompanyDeveloper
+        self.__CompanyExecutiveLead = CompanyExecutiveLead
+        self.__AssistantExecutive = AssistantExecutive
+        self.__Sales = SalesLead
 
-    def get_feedbackID(self):
-        return self.__feedbackID
+    def get_CompanyDeveloper(self):
+        return self.__CompanyDeveloper
 
-    def get_name(self):
-        return self.__name
+    def get_CompanyExecutiveLead(self):
+        return self.__CompanyExecutiveLead
 
-    def get_number(self):
-        return self.__number
+    def get_AssistantExecutive(self):
+        return self.__AssistantExecutive
 
     def get_feedbackZ(self):
-        return self.__feedbackZ
+        return self.__SalesLead
 
-    def set_feedbackID(self, feedbackID):
-        self.__feedbackID = feedbackID
+    def get_CompanyDeveloper(self):
+        return self.__CompanyDeveloper
 
-    def set_number(self, number):
-        self.__number = number
+    def get_CompanyExecutiveLead(self):
+        return self.__CompanyExecutiveLead
 
-    def set_feedbackZ(self, feedbackZ):
-        self.__feedbackZ = feedbackZ
+    def get_AssitantExecutive(self):
+        return self.__AssistantExecutive
+
+    def get_SalesLead(self):
+        return self.__SalesLead

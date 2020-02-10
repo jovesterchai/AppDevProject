@@ -55,3 +55,10 @@ class CreateFeedback(Form):
     name = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
     number = IntegerField('Number', [validators.NumberRange(min=100000, max=99999999, message="Please use a proper handphone number")])
     feedbackZ = TextAreaField('Feedback', [validators.DataRequired()])
+
+class UpdateStaffboard(Form):
+    CompanyDeveloper = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    CompanyExecutiveLead = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    AssistantExecutive = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    SalesLead = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+

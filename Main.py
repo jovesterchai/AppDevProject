@@ -710,6 +710,8 @@ def invoice():
         formList.append(item)
     return render_template("invoice.html", invoices=formDict, count=len(formList))
 
+
+
 if __name__ == '__main__':
     app.run()
 
