@@ -13,11 +13,14 @@ class CreateUserForm(Form):
     username = StringField("Username",[validators.Length(min=1, max=150), validators.DataRequired()])
     password = PasswordField('Password', [validators.Length(min=1, max=150), validators.   DataRequired()])
     gender = SelectField("Gender", [validators.DataRequired()], choices=[("", "Select"), ("F", "Female"), ("M", "Male")], default = "")
+    country = StringField("Country", [validators.Length(min=1, max=150), validators.DataRequired()])
+    address = StringField ("Address", [validators.Length(min=1, max=150), validators.DataRequired()])
+    number = StringField("Phone Number", [validators.Length(min=1, max=150), validators.DataRequired()])
 
-    
 class LoginForm(Form):
     username = StringField("Username",[validators.Length(min=1, max=150), validators.DataRequired()])
     password = PasswordField('Password', [validators.Length(min=1, max=150), validators.DataRequired()])
+
 
     
 class CreateProduct(Form):
