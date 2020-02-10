@@ -648,7 +648,7 @@ def createFeedback():
         except:
             print('Error in retrieving feedback from Feedback.db.')
 
-        feedback = Feedback.Feedback(updateFeedbackForm.name.data, updateFeedbackForm.country.data, updateFeedbackForm.feedbackZ.data)
+        feedback = Feedback.Feedback(updateFeedbackForm.name.data, updateFeedbackForm.number.data, updateFeedbackForm.feedbackZ.data)
         feedbackDict[feedback.get_feedbackID()] = feedback
         db['Feedback'] = feedbackDict
         db.close()
