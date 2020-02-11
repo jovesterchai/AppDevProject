@@ -1,8 +1,14 @@
-{% extends "base.html" %}
+{% extends "retrieveusersbase.html" %}
 {% block title %}Product Library System - Retrieve Product Information{% endblock %}
 
 {% block content %}
-<h1 class="display-4">Products For Purchase</h1>
+<style>
+    p{
+color:#DC143C;
+font-weight: bold;
+}
+</style>
+<h1 class="display-4">Items Currently in Market</h1>
 <div>
     {% if count == 0 %}
     <p>There are no products.</p>
@@ -11,9 +17,6 @@
     {% else %}
     <p>There are {{ count }} products.</p>
     {% endif %}
-    <form action="{{ url_for('createProduct') }}">
-        <input type="submit" class="btn btn-info" value="ADD ITEM TO MARKET"/>
-    </form>
 </div>
 <br>
 <div>
@@ -25,18 +28,20 @@
                 <th class="text-center align-middle">Product Name</th>
                 <th class="text-center align-middle">Price</th>
                 <th class="text-center align-middle">Gender</th>
+                <th class="text-center align-middle"></th>
+                <th class="text-center align-middle"></th>
             </tr>
         </thead>
         <tbody>
         {% for item in itemsList %}
             <tr>
                 <td class="text-center align-middle">{{ item.get_itemID() }}</td>
-                <td class="text-center align-middle"><img src="static/files/{{item.get_itemID() + '.jpg'}}" alt="imagePic" style="width:100%"></td>
+                <td class="text-center align-middle"><img src="static/files/{{ item.get_itemID()|string + '.jpg' }}" alt="imagePic" style="width:25%"></td>
                 <td class="text-center align-middle">{{ item.get_name() }}</td>
                 <td class="text-center align-middle">${{ item.get_price() }}</td>
                 <td class="text-center align-middle">{{ item.get_gender() }}</td>
-                <td><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">Update</a></td>
-                <td>
+                <td class="text-center align-middle"><a href="/clothesInfo/{{ item.get_itemID() }}" class="btn btn-warning">Update</a></td>
+                <td class="text-center align-middle">
                     <form action="{{ url_for('deleteProduct', id=item.get_itemID()) }}" method="POST">
                         <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this Product?')">
                     </form>
