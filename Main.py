@@ -274,8 +274,10 @@ def updateProduct(id):
         itemDict = {}
         db = shelve.open('items.db', 'w')
         itemDict = db['Product']
+
         item = itemDict.get(id)
 
+        item.set_itemID(updateProductForm.itemID.data)
         item.set_name(updateProductForm.name.data)
         item.set_price(updateProductForm.price.data)
         item.set_color(updateProductForm.color.data)
@@ -286,7 +288,8 @@ def updateProduct(id):
 
         db['Product'] = itemDict
         db.close()
-        return redirect(url_for('retrieveProducts'))
+
+        return redirect(url_for('retrieveProducts', form=updateProductForm, error='Product has been updated'))
     else:
         itemDict = {}
         db = shelve.open('items.db', 'r')
@@ -294,16 +297,16 @@ def updateProduct(id):
         db.close()
 
         item = itemDict.get(id)
-        updateProductForm.name.data = item.set_name()
-        updateProductForm.price.data = item.set_price()
-        updateProductForm.color.data = item.set_color()
-        updateProductForm.size.data = item.set_size()
-        updateProductForm.quantity.data = item.set_quantity()
+        updateProductForm.itemID.data = item.get_itemID()
+        updateProductForm.name.data = item.get_name()
+        updateProductForm.price.data = item.get_price()
+        updateProductForm.color.data = item.get_color()
+        updateProductForm.size.data = item.get_size()
+        updateProductForm.quantity.data = item.get_quantity()
         updateProductForm.gender.data = item.get_gender()
-        updateProductForm.description.data = item.set_description()
+        updateProductForm.description.data = item.get_description()
 
-        return render_template('updateProduct.html', form=updateProductForm)
-
+    return render_template('updateProduct.html',form=updateProductForm, error='')
 
 
 @app.route('/clothesInfo/<int:id>', methods=['GET', 'POST'])
