@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "retrieveusersbase.html" %}
 {% block title %}Product Library System - Update Product{% endblock %}
 
 {% block content %}
 {% from "includes/_formHelper.html" import render_field %}
 <h1 class="display-4">Update Product</h1>
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
     <div class="form-group">
         {{ render_field(form.itemID, class="form-control") }}
     </div>
@@ -26,6 +26,13 @@
     <div class="form-group">
         {{ render_field(form.quantity, class="form-control") }}
     </div>
+    <div class="form-group">
+        {{ render_field(form.quantity, class="form-control") }}
+    </div>
+        <div class="picture">
+            <input type="file" style="border:none" name = file class = "form-control">
+            <br>
+        </div>
     <div id="prof">
         <div class="form-group">
             {{ render_field(form.description, class="form-control") }}
