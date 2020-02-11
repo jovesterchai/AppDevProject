@@ -220,7 +220,7 @@ def createProduct():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(str(createProductForm.itemID.data + '.jpg'))
+            filename = secure_filename(str(createProductForm.itemID.data) + '.jpg')
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             item = Product.Product(createProductForm.itemID.data, createProductForm.name.data,
