@@ -1,6 +1,9 @@
 class Product:
+    countID = 0
 
     def __init__(self, itemID, name, price, color, size, quantity, gender, description):
+        self.__class__.countID += 1
+        self.__itemCount = self.__class__.countID
         self.__itemID = itemID
         self.__name = name
         self.__price = price

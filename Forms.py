@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, RadioField, SelectField, TextAreaField, validators, SelectMultipleField, DecimalField, IntegerField, PasswordField
+from wtforms import Form, StringField, RadioField, SelectField, TextAreaField, validators, SelectMultipleField, DecimalField, IntegerField, PasswordField, FileField
 
 class CreateUserFeedback(Form):
     firstName = StringField('First Name', [validators.Length(min=1, max=150), validators.DataRequired()])
@@ -15,7 +15,7 @@ class CreateUserForm(Form):
     gender = SelectField("Gender", [validators.DataRequired()], choices=[("", "Select"), ("F", "Female"), ("M", "Male")], default = "")
     country = StringField("Country", [validators.Length(min=1, max=150), validators.DataRequired()])
     address = StringField ("Address", [validators.Length(min=1, max=150), validators.DataRequired()])
-    number = StringField("Phone Number", [validators.Length(min=1, max=150), validators.DataRequired()])
+    number = IntegerField("Phone Number", [validators.NumberRange(min=10000000, message='Invalid Phone Number.'), validators.DataRequired()])
 
 class LoginForm(Form):
     username = StringField("Username",[validators.Length(min=1, max=150), validators.DataRequired()])
@@ -53,5 +53,12 @@ class R(Form):
 
 class CreateFeedback(Form):
     name = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
-    country = StringField('Country', [validators.Length(min=1, max=150), validators.DataRequired()])
-    feedbackZ = TextAreaField('Feedback', [validators.Optional()])
+    number = IntegerField('Number', [validators.NumberRange(min=100000, max=99999999, message="Please use a proper handphone number")])
+    feedbackZ = TextAreaField('Feedback', [validators.DataRequired()])
+
+class UpdateStaffboard(Form):
+    CompanyDeveloper = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    CompanyExecutiveLead = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    AssistantExecutive = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    SalesLead = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+

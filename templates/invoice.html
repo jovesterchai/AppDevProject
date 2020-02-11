@@ -1,9 +1,16 @@
-{% extends "base.html" %}
+{% extends "retrieveusersbase.html" %}
 {% block title %}Product Library System - Retrieve Product Information{% endblock %}
 
 {% block content %}
-<h1 class="display-4">Products For Purchase</h1>
+<h1 class="display-4">Customer Invoices</h1>
 <div>
+    {% if count == 0 %}
+    <p>There are no invoices.</p>
+    {% elif count == 1 %}
+    <p>There is 1 invoice.</p>
+    {% else %}
+    <p>There are {{ count }} invoices.</p>
+    {% endif %}
     <table class="table table-striped">
         <thead>
             <tr>
