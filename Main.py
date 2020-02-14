@@ -354,7 +354,7 @@ def clothesInfo(id):
             item = itemDict.get(key)
             itemsList.append(item)
 
-        return render_template('clothesInfo.html', status='user', form=createProductForm, id=id, discount=False, name=createProductForm.name.data, gender=createProductForm.gender.data)
+        return render_template('clothesInfo.html', status='user', form=createProductForm, id=id, discount=False, color=createProductForm.color.data, price=createProductForm.price.data, name=createProductForm.name.data, gender=createProductForm.gender.data)
 
     
 
